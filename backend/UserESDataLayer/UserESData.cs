@@ -13,11 +13,14 @@ namespace UserESDataLayer
         private ILogger _logger;
         private string _connectionString;
 
-        public UserESData(IConfiguration configuration, ILogger logger)
+        public UserESData(IConfiguration configuration)
         {
             _configuration = configuration;
             this._connectionString = _configuration.GetConnectionString("DefaultConnection");
-            _logger = logger;
+            _logger = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            }).CreateLogger<UserESData>();
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
@@ -30,7 +33,7 @@ namespace UserESDataLayer
                     using (SqlCommand cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
-                        cmd.CommandText = "SELECT IdUsuario, NombreUsuario, Email, UsrPassword FROM Users";
+                        cmd.CommandText = "SELECT IdUsuario, NombreUsuario, Email, UsrPassword FROM Usuario";
                         cmd.CommandType = CommandType.Text;
                         await cmd.Connection.OpenAsync();
                         using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
@@ -78,7 +81,7 @@ namespace UserESDataLayer
                     using (SqlCommand cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
-                        cmd.CommandText = "SELECT IdUsuario, NombreUsuario, Email, UsrPassword FROM Users WHERE IdUsuario = @IdUsuario";
+                        cmd.CommandText = "SELECT IdUsuario, NombreUsuario, Email, UsrPassword FROM Usuario WHERE IdUsuario = @IdUsuario";
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@IdUsuario", id);
                         await cmd.Connection.OpenAsync();
@@ -125,7 +128,7 @@ namespace UserESDataLayer
                     using (SqlCommand cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
-                        cmd.CommandText = "INSERT INTO Users (NombreUsuario, Email, UsrPassword) OUTPUT INSERTED.IdUsuario VALUES (@NombreUsuario, @Email, @UsrPassword)";
+                        cmd.CommandText = "INSERT INTO Usuario (NombreUsuario, Email, UsrPassword) OUTPUT INSERTED.IdUsuario VALUES (@NombreUsuario, @Email, @UsrPassword)";
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@NombreUsuario", user.NombreUsuario);
                         cmd.Parameters.AddWithValue("@Email", user.Email);
@@ -158,19 +161,39 @@ namespace UserESDataLayer
             try
             {
                 int rowsAffected = 0;
-                using (SqlConnection con = new SqlConnection(_connectionString))
+                if (user.UsrPassword == null || user.UsrPassword == "")
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (SqlConnection con = new SqlConnection(_connectionString))
                     {
-                        cmd.Connection = con;
-                        cmd.CommandText = "UPDATE Users SET NombreUsuario = @NombreUsuario, Email = @Email, UsrPassword = @UsrPassword WHERE IdUsuario = @IdUsuario";
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Parameters.AddWithValue("@IdUsuario", user.IdUsuario);
-                        cmd.Parameters.AddWithValue("@NombreUsuario", user.NombreUsuario);
-                        cmd.Parameters.AddWithValue("@Email", user.Email);
-                        cmd.Parameters.AddWithValue("@UsrPassword", user.UsrPassword);
-                        await cmd.Connection.OpenAsync();
-                        rowsAffected = await cmd.ExecuteNonQueryAsync();
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandText = "UPDATE Usuario SET NombreUsuario = @NombreUsuario, Email = @Email WHERE IdUsuario = @IdUsuario";
+                            cmd.CommandType = CommandType.Text;
+                            cmd.Parameters.AddWithValue("@IdUsuario", user.IdUsuario);
+                            cmd.Parameters.AddWithValue("@NombreUsuario", user.NombreUsuario);
+                            cmd.Parameters.AddWithValue("@Email", user.Email);
+                            await cmd.Connection.OpenAsync();
+                            rowsAffected = await cmd.ExecuteNonQueryAsync();
+                        }
+                    }
+                }
+                else 
+                {
+                    using (SqlConnection con = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandText = "UPDATE Usuario SET NombreUsuario = @NombreUsuario, Email = @Email, UsrPassword = @UsrPassword WHERE IdUsuario = @IdUsuario";
+                            cmd.CommandType = CommandType.Text;
+                            cmd.Parameters.AddWithValue("@IdUsuario", user.IdUsuario);
+                            cmd.Parameters.AddWithValue("@NombreUsuario", user.NombreUsuario);
+                            cmd.Parameters.AddWithValue("@Email", user.Email);
+                            cmd.Parameters.AddWithValue("@UsrPassword", user.UsrPassword);
+                            await cmd.Connection.OpenAsync();
+                            rowsAffected = await cmd.ExecuteNonQueryAsync();
+                        }
                     }
                 }
                 return rowsAffected > 0;
@@ -202,7 +225,7 @@ namespace UserESDataLayer
                     using (SqlCommand cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
-                        cmd.CommandText = "DELETE FROM Users WHERE IdUsuario = @IdUsuario";
+                        cmd.CommandText = "DELETE FROM Usuario WHERE IdUsuario = @IdUsuario";
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@IdUsuario", id);
                         await cmd.Connection.OpenAsync();

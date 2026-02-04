@@ -3,7 +3,7 @@ CREATE DATABASE PruebaHas;
 use PruebaHas go;
 
 --creación de tablas
-create table Usuario(IdUsuario int primary key, NombreUsuario nvarchar(max), Email nvarchar(max), UsrPassword nvarchar(max))
+create table Usuario(IdUsuario int identity(1,1) primary key, NombreUsuario nvarchar(max), Email nvarchar(max), UsrPassword nvarchar(max))
 
 create table Cliente (IdCliente int primary key, NombreCliete nvarchar(max))
 
