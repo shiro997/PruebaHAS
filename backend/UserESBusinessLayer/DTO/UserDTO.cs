@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PruebaHasUserES.DTO
+namespace UserESBusinessLayer.DTO
 {
     public class UserDTO
     {
@@ -9,7 +9,7 @@ namespace PruebaHasUserES.DTO
         public required string NombreUsuario { get; set; }
         [Required]
         public required string Email { get; set; }
-        [Required]
-        public required string UsrPassword { get; set; }
+        
+        public string? UsrPassword { get; set; }
     }
 }
