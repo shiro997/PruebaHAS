@@ -46,4 +46,14 @@ la tabla de usuarios en la base de datos posee los siguientes campos:
 
 -UsrPassword de tipo texto (nvarchar) con longitud máxima, está destinado a almacenar los hash de contraseña
 
-en las validaciones de los formularios el frontend mediante los validadores de los formularios reactivos de angular se encarga de la verificación de los datos de entrada y que los campos relevantes a la creación, actualización y login de usuarios lleven los datos requeridos, con los patrones requeridos y en el caso de las contraseñas la longitud mínima requerida. A tener en cuenta: El backend está hecho usando .Net 10 con lenguaje C#, el frontend está realizado en Angular v15 usando typescript para el manejo del flujo de trabajo, se recomienda cambiar en el appsettings.json la cadena de conexión de la base de datos, no se utilizó ningún ORM (Dapper o EF Core) para el manejo de la capa de datos y comunicación con la base de datos
+en las validaciones de los formularios el frontend mediante los validadores de los formularios reactivos de angular se encarga de la verificación de los datos de entrada y que los campos relevantes a la creación, actualización y login de usuarios lleven los datos requeridos, con los patrones requeridos y en el caso de las contraseñas la longitud mínima requerida. A tener en cuenta: El backend está hecho usando .Net 10 con lenguaje C#, el frontend está realizado en Angular v15 usando typescript para el manejo del flujo de trabajo, se recomienda cambiar en el appsettings.json la cadena de conexión de la base de datos, no se utilizó ningún ORM (Dapper o EF Core) para el manejo de la capa de datos y comunicación con la base de datos.
+
+pasos para la configuración y ejecución:
+paso uno ejecutar los scripts en el siguiente orden:
+1. Database-Creation.sql
+2. datos base usuarios.sql
+3. en el archivo appsettings json cambiar el conection string relevante al servidor de base de datos del evaluador y la base de datos PruebaHas
+4. ejecutar el backend en modo Http y escuchando en el puerto 5417
+5. abrir la carpeta /PruebaHas/Frontend/PruebaHass
+6. en una terminal abierta en el directorio del paso anterior ejecutar comando npm i
+7. en la terminal ejecutar comando ng s --port 3400
