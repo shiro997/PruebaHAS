@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 using UserESBusinessLayer;
@@ -170,6 +171,16 @@ namespace PruebaHasUserES.Controllers
                 Response.Cookies.Append("AuthToken", loginRes.Token, cookieOptions);
 
                 return Ok(loginRes);
+            }
+            catch (PasswordNotMatchException SE)
+            {
+                _logger.LogError($"System Error in Login: {SE.Message}");
+                return StatusCode(401, SE.Message);
+            }
+            catch (EmailNotMatchException EE) 
+            {
+                _logger.LogError($"Email Error in Login: {EE.Message}");
+                return StatusCode(404, EE.Message);
             }
             catch (Exception ex)
             {

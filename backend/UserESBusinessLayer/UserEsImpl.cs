@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Diagnostics;
+using Exceptions;
 
 namespace UserESBusinessLayer
 {
@@ -293,25 +294,21 @@ namespace UserESBusinessLayer
 
         public async Task<LoginResDTO> LoginAsync(LoginReqDTO login) 
         {
-            try 
+            try
             {
                 var Users = await _userData.GetUsersAsync();
                 var user = Users.FirstOrDefault(u => u.Email == login.Email);
-                if (user == null) 
+                if (user == null)
                 {
-                    return new LoginResDTO 
-                    {
-                        IsAuthenticated = false,
-                        Message = "User not found."
-                    };
+                    throw new EmailNotMatchException("Invalid Email");
                 }
 
                 string hashedPassword = user.UsrPassword;
-                
+
                 bool isVerificated = ComparePasswords(hashedPassword, login.Password);
-                if (!isVerificated) 
+                if (!isVerificated)
                 {
-                    throw new Exception("Invalid Password");
+                    throw new PasswordNotMatchException("Invalid Password");
                 }
                 string token = GenerateAccessToken(user.Email);
 
@@ -329,6 +326,16 @@ namespace UserESBusinessLayer
                 };
 
             }
+            catch (PasswordNotMatchException PE) 
+            {
+                _logger.LogError(PE, "Password does not match.");
+                throw;
+            }
+            catch (EmailNotMatchException EE)
+            {
+                _logger.LogError(EE, "Email does not match.");
+                throw;
+            }
             catch (NullReferenceException ex)
             {
                 _logger.LogError(ex, "The process was unsuccesful.");
@@ -344,7 +351,7 @@ namespace UserESBusinessLayer
                 _logger.LogError(ex, "Database error occurred while retrieving users.");
                 throw;
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 _logger.LogError(e, "An unexpected error occurred during login.");
                 throw;

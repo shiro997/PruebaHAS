@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import * as bootstrap from 'bootstrap';
 import { User } from './User/models/User';
 import { UserService } from './User/service/user.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent {
 
   isAuth: boolean = false;
 
-  constructor(private userService: UserService, private route: Router, private cookieStore: CookieService) {
+  constructor(private userService: UserService, private route: Router, private cookieStore: CookieService, private tstService: ToastrService) {
 
   }
 
@@ -34,11 +34,9 @@ export class AppComponent {
     }
   }
 
-  cerrarModalRegister($event: any) {
-    if ($event != null) {
-      let modal = document.getElementById('registerModal');
-      let bsModal = new bootstrap.Modal(<HTMLElement>modal);
-      bsModal?.hide();
+  notificarCreado($event:boolean) {
+    if ($event) {
+      this.tstService.success('User created successfully', 'Success');
     }
   }
 

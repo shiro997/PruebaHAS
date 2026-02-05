@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="Exceptions/Exceptions.csproj" Id="f268f8b9-4ec3-42ff-9078-a472d964383d" />
   <Project Path="PruebaHasUserES/PruebaHasUserES.csproj" />
   <Project Path="UserESBusinessLayer/UserESBusinessLayer.csproj" />
   <Project Path="UserESDataLayer/UserESDataLayer.csproj" />

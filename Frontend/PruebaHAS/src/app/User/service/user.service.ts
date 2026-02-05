@@ -55,10 +55,10 @@ export class UserService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Origin': this.env.urlSecurity
-    })})/*.pipe(
+    })}).pipe(
       tap(resp => console.debug('[UserService] getUsers response', resp)),
       catchError(err => { console.error('[UserService] getUsers error', err); return throwError(() => err); })
-    )*/;
+    );
   }
 
   getUserById(id: number): Observable<User> {
@@ -68,10 +68,10 @@ export class UserService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Origin': this.env.urlSecurity
-    })})/*.pipe(
+    })}).pipe(
       tap(resp => console.debug('[UserService] getUserById response', resp)),
       catchError(err => { console.error('[UserService] getUserById error', err); return throwError(() => err); })
-    )*/;
+    );
   }
 
   createUser(data: User): Observable<User> {
@@ -82,10 +82,10 @@ export class UserService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Origin': this.env.urlSecurity
-    })})/*.pipe(
+    })}).pipe(
       tap(resp => console.debug('[UserService] createUser response', resp)),
       catchError(err => { console.error('[UserService] createUser error', err); return throwError(() => err); })
-    )*/;
+    );
   }
 
   updateUser(data: User): Observable<boolean> {
@@ -96,10 +96,10 @@ export class UserService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Origin': this.env.urlSecurity
-    }) })/*.pipe(
+    }) }).pipe(
       tap(resp => console.debug('[UserService] updateUser response', resp)),
       catchError(err => { console.error('[UserService] updateUser error', err); return throwError(() => err); })
-    )*/;
+    );
   }
 
   deleteUser(id: number): Observable<boolean> {
@@ -109,10 +109,10 @@ export class UserService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Origin': this.env.urlSecurity
-    }) })/*.pipe(
+    }) }).pipe(
       tap(resp => console.debug('[UserService] deleteUser response', resp)),
       catchError(err => { console.error('[UserService] deleteUser error', err); return throwError(() => err); })
-    )*/;
+    );
   }
 
 }
