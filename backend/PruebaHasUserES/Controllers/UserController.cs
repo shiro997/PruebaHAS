@@ -99,7 +99,7 @@ namespace PruebaHasUserES.Controllers
                     return NotFound("User not found");
                 }
 
-                return Ok("User updated successfully");
+                return Ok(isUpdated);
 
             }
             catch (NullReferenceException NE) 
@@ -129,7 +129,7 @@ namespace PruebaHasUserES.Controllers
                 {
                     return NotFound("User not found");
                 }
-                return Ok("User deleted successfully");
+                return Ok(isDeleted);
             }
             catch (NullReferenceException NE)
             {

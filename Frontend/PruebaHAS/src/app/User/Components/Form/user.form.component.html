@@ -1,0 +1,38 @@
+<div class="container-fluid" >
+  <form [formGroup]="frmUser">
+    <div class="card">
+      <div class="card-container">
+        
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <input type="text" required autocomplete="off" class="form-control" placeholder="nombreUsuario" formControlName="nombreUsuario">
+              <span class="error" *ngIf="(frmUser.get('nombreUsuario')?.touched || frmUser.get('nombreUsuario')?.dirty) && frmUser.get('nombreUsuario')?.errors?.['required']" style="color:red;">The User Name is required!</span>
+            </div>
+          </div>  
+          <div class="row"style="margin-top: 2%;">
+            <div class="col">
+              <input type="email" required autocomplete="off" id="usrMail" class="form-control" placeholder="email" formControlName="email" (blur)="validateEmail()">
+              <span class="error" *ngIf="(frmUser.get('email')?.touched || frmUser.get('email')?.dirty) && frmUser.get('email')?.errors?.['required']" style="color:red;">The email is required!</span>
+              <span class="error" *ngIf="(frmUser.get('email')?.touched || frmUser.get('email')?.dirty) && frmUser.get('email')?.errors?.['email']" style="color:red;">The email is invalid!</span>
+            </div>
+          </div>  
+          <div class="row" style="margin-top: 2%;">
+            <div class="col">
+              <input type="Password" class="form-control" id="usrPass" required autocomplete="off" placeholder="Password" formControlName="usrPassword" (blur)="ValidatePassword()">
+              <span class="error" *ngIf="(frmUser.get('usrPassword')?.touched || frmUser.get('usrPassword')?.dirty) && frmUser.get('usrPassword')?.errors?.['required']" style="color:red;">The usrPassword is required!</span>
+              <span class="error" *ngIf="(frmUser.get('usrPassword')?.touched || frmUser.get('usrPassword')?.dirty) && frmUser.get('usrPassword')?.errors?.['minlength']" style="color:red;">The usrPassword must be at least 8 characters!</span>
+              <span class="error" *ngIf="(frmUser.get('usrPassword')?.touched || frmUser.get('usrPassword')?.dirty) && frmUser.get('usrPassword')?.errors?.['pattern']" style="color:red;">The usrPassword must contain at least one letter and one number!</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" *ngIf="!isEditMode" (click)="createUser()">Create or Register</button>
+          <button class="btn btn-primary" *ngIf="isEditMode" (click)="updateUser()">Update</button>
+        </div>
+      </div>
+    </div>
+    
+
+  </form>
+</div>
