@@ -8,6 +8,7 @@ namespace UserESBusinessLayer.DTO
     {
         public string? Token { get; set; }  
         public bool IsAuthenticated { get; set; }   
-        public string? Message { get; set; }    
+        public string? Message { get; set; }
+        public UserDTO User { get; set; }
     }
 }

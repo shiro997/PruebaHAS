@@ -319,7 +319,13 @@ namespace UserESBusinessLayer
                 {
                     IsAuthenticated = true,
                     Token = token,
-                    Message = "Login successful."
+                    Message = "Login successful.",
+                    User = new UserDTO
+                    {
+                        IdUsuario = user.IdUsuario,
+                        NombreUsuario = user.NombreUsuario,
+                        Email = user.Email
+                    }
                 };
 
             }

@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MiPoliticaCORS",
-        builder => builder.WithOrigins(["http://localhost","https://localhost","http://0.0.0.0","https://0.0.0.0"])
+        builder => builder.WithOrigins(["http://localhost:3400","https://localhost:3400","http://0.0.0.0","https://0.0.0.0"])
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });

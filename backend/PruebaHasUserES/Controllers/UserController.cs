@@ -163,7 +163,7 @@ namespace PruebaHasUserES.Controllers
                 {
                     HttpOnly = true, // Protege contra XSS
                     Secure = true,   // Solo envía sobre HTTPS
-                    SameSite = SameSiteMode.Lax, // Previene CSRF
+                    SameSite = SameSiteMode.Lax, // Previene CSRF por ahora en LAX y no en strict
                     Expires = DateTime.UtcNow.AddMinutes(30) // Coincidir con el token
                 };
 
